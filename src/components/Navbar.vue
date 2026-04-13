@@ -8,10 +8,16 @@ const cart = useCartStore()
   <header class="nav-wrap">
     <nav class="nav page-shell glass-panel">
       <router-link to="/" class="brand">
-        <span class="brand-mark">NG</span>
+        <span class="brand-mark" aria-hidden="true">
+          <span class="joystick-base"></span>
+          <span class="joystick-shaft"></span>
+          <span class="joystick-knob">
+            <span class="joystick-dot"></span>
+          </span>
+        </span>
         <div>
           <strong>NitroGames</strong>
-          <small>Arcade store</small>
+          <small>GAME STORE</small>
         </div>
       </router-link>
 
@@ -69,16 +75,68 @@ const cart = useCartStore()
 }
 
 .brand-mark {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
-  color: #021018;
-  font-family: var(--font-display);
-  font-weight: 800;
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 20px;
+  overflow: hidden;
+  flex: 0 0 auto;
+  background:
+    radial-gradient(circle at 75% 82%, rgba(255, 156, 96, 0.95), transparent 34%),
+    linear-gradient(135deg, #78f0c8 8%, #b8edb2 48%, #ffbf8b 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 14px 28px rgba(0, 0, 0, 0.28);
 }
+
+.joystick-base,
+.joystick-shaft,
+.joystick-knob {
+  position: absolute;
+}
+
+.joystick-base {
+  left: 15px;
+  bottom: 11px;
+  width: 24px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fffdf7 0%, #ece5d8 100%);
+  box-shadow:
+    inset 0 -2px 0 rgba(184, 176, 160, 0.45),
+    0 6px 14px rgba(0, 0, 0, 0.16);
+}
+
+.joystick-shaft {
+  left: 24px;
+  bottom: 21px;
+  width: 7px;
+  height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fffdf7 0%, #f1eadf 100%);
+}
+
+.joystick-knob {
+  left: 18px;
+  bottom: 33px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fffefb 0%, #f0e7da 100%);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14);
+}
+
+.joystick-dot {
+  position: absolute;
+  top: 5px;
+  left: 4px;
+  width: 7px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(132, 137, 112, 0.72);
+  transform: rotate(-45deg);
+}
+
 
 .links {
   display: flex;

@@ -1,16 +1,12 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCartStore } from '../store/cart'
+import { getGameById } from '../data/games'
 
 const route = useRoute()
-const product = ref({})
 const cart = useCartStore()
-
-onMounted(async () => {
-  const res = await fetch(`https://fakestoreapi.com/products/${route.params.id}`)
-  product.value = await res.json()
-})
+const product = computed(() => getGameById(route.params.id) || {})
 
 const shortCategory = computed(() => product.value.category || 'Coleccion Nitro')
 const add = () => cart.addToCart(product.value)
@@ -91,8 +87,12 @@ const add = () => cart.addToCart(product.value)
 }
 
 .image-frame img {
-  max-height: 360px;
-  object-fit: contain;
+  width: 100%;
+  max-width: 380px;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.32);
 }
 
 .info-panel {

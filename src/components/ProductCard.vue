@@ -49,9 +49,10 @@ const goToDetail = () => {
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 240px;
+  min-height: 320px;
   padding: 18px;
   border-radius: 18px;
+  overflow: hidden;
   background:
     radial-gradient(circle at top, rgba(99, 245, 210, 0.16), transparent 45%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
@@ -59,9 +60,10 @@ const goToDetail = () => {
 
 .cover img {
   width: 100%;
-  max-width: 180px;
-  height: 180px;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
 }
 
 .category {

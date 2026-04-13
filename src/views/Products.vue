@@ -1,14 +1,10 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, computed } from 'vue'
 import ProductCard from '../components/ProductCard.vue'
+import { games } from '../data/games'
 
-const products = ref([])
+const products = ref(games)
 const category = ref('all')
-
-onMounted(async () => {
-  const res = await fetch('https://fakestoreapi.com/products')
-  products.value = await res.json()
-})
 
 const categories = computed(() => ['all', ...new Set(products.value.map((p) => p.category))])
 
