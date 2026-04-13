@@ -32,6 +32,7 @@ const goToDetail = () => {
 .card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 100%;
   padding: 18px;
   border-radius: 24px;
@@ -89,6 +90,7 @@ const goToDetail = () => {
   margin: 0 0 10px;
   font-size: 1.12rem;
   line-height: 1.35;
+  word-break: break-word;
 }
 
 .content p {
@@ -125,5 +127,26 @@ const goToDetail = () => {
   color: #031018;
   background: linear-gradient(135deg, var(--accent) 0%, #8cf7de 100%);
   font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .cover {
+    min-height: 250px;
+    padding: 14px;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-btn {
+    width: 100%;
+  }
 }
 </style>

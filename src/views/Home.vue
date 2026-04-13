@@ -222,6 +222,10 @@
     min-height: auto;
   }
 
+  .hero-copy {
+    padding: 12px 0 0;
+  }
+
   .hero-visual {
     min-height: 420px;
   }
@@ -232,15 +236,53 @@
 }
 
 @media (max-width: 600px) {
+  .hero-copy {
+    gap: 18px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-visual {
+    min-height: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .visual-card {
+    position: static;
+    width: 100%;
+    transform: none;
+  }
+
   .main-card {
-    left: 18px;
-    right: 18px;
-    bottom: 18px;
+    padding: 20px;
+  }
+
+  .main-card h2 {
+    font-size: 1.7rem;
   }
 
   .side-card {
-    top: 18px;
-    width: calc(100% - 36px);
+    padding: 18px;
+  }
+
+  .side-card strong {
+    font-size: 1.25rem;
+  }
+
+  .category-pill {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-visual {
+    padding: 16px;
   }
 }
 </style>

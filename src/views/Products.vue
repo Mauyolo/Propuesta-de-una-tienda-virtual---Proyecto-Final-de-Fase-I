@@ -125,10 +125,40 @@ const filtered = computed(() => {
   .products-hero {
     flex-direction: column;
     align-items: stretch;
+    padding: 22px;
   }
 
   .filter-panel {
     min-width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .products-page {
+    gap: 18px;
+  }
+
+  .products-hero {
+    gap: 18px;
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .filter-panel select {
+    width: 100%;
+  }
+
+  .results-bar {
+    align-items: stretch;
+  }
+
+  .results-copy {
+    font-size: 0.94rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 }
 </style>

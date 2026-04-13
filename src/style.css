@@ -29,6 +29,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  overflow-x: hidden;
   font-family: var(--font-body);
   color: var(--text);
   background:
@@ -173,5 +174,31 @@ img {
 
   .page-section {
     padding: 20px 0 44px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .tag,
+  .eyebrow {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-title {
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
+    line-height: 1;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 9vw, 2.4rem);
+    line-height: 1.05;
+  }
+
+  .section-copy {
+    font-size: 0.97rem;
+    line-height: 1.65;
   }
 }

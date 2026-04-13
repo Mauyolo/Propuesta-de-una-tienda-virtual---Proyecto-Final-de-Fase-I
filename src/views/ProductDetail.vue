@@ -160,6 +160,7 @@ const add = () => cart.addToCart(product.value)
 @media (max-width: 620px) {
   .detail-card {
     padding: 18px;
+    gap: 20px;
   }
 
   .purchase-box,
@@ -174,6 +175,24 @@ const add = () => cart.addToCart(product.value)
 
   .btn {
     width: 100%;
+  }
+
+  .image-frame {
+    min-height: 280px;
+    padding: 18px;
+  }
+
+  .image-frame img {
+    max-width: 100%;
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 420px) {
+  .detail-card,
+  .benefit,
+  .purchase-box {
+    border-radius: 22px;
   }
 }
 </style>

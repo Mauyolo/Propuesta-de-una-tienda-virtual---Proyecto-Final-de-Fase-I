@@ -209,22 +209,42 @@ const cart = useCartStore()
 }
 
 @media (max-width: 700px) {
-  .cart-header,
-  .cart-item {
-    grid-template-columns: 1fr;
-  }
-
   .cart-header {
+    flex-direction: column;
     align-items: start;
+    padding: 20px;
   }
 
   .cart-total {
     text-align: left;
   }
 
+  .cart-item {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
   .cart-item img {
     width: 100%;
     max-width: 120px;
+  }
+
+  .qty-box,
+  .line-total {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-item,
+  .summary,
+  .empty-state {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .qty-box {
+    justify-content: space-between;
   }
 }
 </style>

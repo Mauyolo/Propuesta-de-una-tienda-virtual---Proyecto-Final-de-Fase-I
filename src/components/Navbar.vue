@@ -184,6 +184,10 @@ const cart = useCartStore()
 }
 
 @media (max-width: 768px) {
+  .nav-wrap {
+    padding-top: 12px;
+  }
+
   .nav {
     padding: 14px 16px;
     border-radius: 18px;
@@ -191,8 +195,42 @@ const cart = useCartStore()
     align-items: stretch;
   }
 
+  .brand {
+    justify-content: center;
+  }
+
   .links {
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .nav-link,
+  .cart-link {
+    width: 100%;
+    padding: 0 10px;
+    font-size: 0.92rem;
+  }
+
+  .cart-count {
+    min-width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 460px) {
+  .brand-mark {
+    width: 50px;
+    height: 50px;
+    border-radius: 18px;
+  }
+
+  .brand strong {
+    font-size: 1rem;
+  }
+
+  .brand small {
+    font-size: 0.72rem;
   }
 }
 </style>
