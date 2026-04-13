@@ -90,9 +90,17 @@ const filtered = computed(() => {
   padding: 0 16px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(5, 10, 18, 0.96);
   color: var(--text);
   outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.filter-panel select option {
+  background: #000;
+  color: var(--text);
 }
 
 .results-bar {
