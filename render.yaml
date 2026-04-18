@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: nitrogames-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false      # Configura este valor manualmente en el panel de Render
+      - key: PORT
+        value: 3000
+    healthCheckPath: /api/products

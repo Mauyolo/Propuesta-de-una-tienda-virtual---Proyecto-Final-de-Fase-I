@@ -1,13 +1,23 @@
 <script setup>
+import { ref, computed } from 'vue'
 import { useCartStore } from '../store/cart'
 
 const cart = useCartStore()
+const menuOpen = ref(false)
+
+const cartCount = computed(() =>
+  cart.cart.reduce((sum, p) => sum + p.quantity, 0)
+)
+
+const closeMenu = () => { menuOpen.value = false }
 </script>
 
 <template>
   <header class="nav-wrap">
     <nav class="nav page-shell glass-panel">
-      <router-link to="/" class="brand">
+
+      <!-- Brand -->
+      <router-link to="/" class="brand" @click="closeMenu">
         <span class="brand-mark" aria-hidden="true">
           <span class="joystick-base"></span>
           <span class="joystick-shaft"></span>
@@ -21,15 +31,40 @@ const cart = useCartStore()
         </div>
       </router-link>
 
+      <!-- Desktop links -->
       <div class="links">
-        <router-link to="/" class="nav-link">Inicio</router-link>
+        <router-link to="/" class="nav-link" exact-active-class="router-link-exact-active">Inicio</router-link>
         <router-link to="/products" class="nav-link">Juegos</router-link>
+        <router-link to="/combos" class="nav-link">Combos</router-link>
         <router-link to="/cart" class="cart-link">
           Carrito
-          <span class="cart-count">{{ cart.cart.length }}</span>
+          <span class="cart-count" :class="{ pulse: cartCount > 0 }">{{ cartCount }}</span>
         </router-link>
       </div>
+
+      <!-- Mobile hamburger -->
+      <button
+        class="hamburger"
+        :aria-expanded="menuOpen"
+        aria-label="Menú"
+        @click="menuOpen = !menuOpen"
+      >
+        <span></span><span></span><span></span>
+      </button>
     </nav>
+
+    <!-- Mobile drawer -->
+    <Transition name="drawer">
+      <div v-if="menuOpen" class="mobile-menu glass-panel page-shell">
+        <router-link to="/" class="mobile-link" @click="closeMenu">Inicio</router-link>
+        <router-link to="/products" class="mobile-link" @click="closeMenu">Juegos</router-link>
+        <router-link to="/combos" class="mobile-link" @click="closeMenu">Combos</router-link>
+        <router-link to="/cart" class="mobile-link cart-mobile" @click="closeMenu">
+          Carrito
+          <span class="cart-count">{{ cartCount }}</span>
+        </router-link>
+      </div>
+    </Transition>
   </header>
 </template>
 
@@ -50,6 +85,7 @@ const cart = useCartStore()
   border-radius: 22px;
 }
 
+/* Brand */
 .brand {
   display: flex;
   align-items: center;
@@ -74,6 +110,7 @@ const cart = useCartStore()
   letter-spacing: 0.12em;
 }
 
+/* Joystick icon */
 .brand-mark {
   position: relative;
   width: 58px;
@@ -137,7 +174,7 @@ const cart = useCartStore()
   transform: rotate(-45deg);
 }
 
-
+/* Desktop links */
 .links {
   display: flex;
   align-items: center;
@@ -154,7 +191,7 @@ const cart = useCartStore()
   padding: 0 16px;
   border-radius: 999px;
   color: var(--muted);
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .nav-link:hover,
@@ -181,40 +218,94 @@ const cart = useCartStore()
   color: #031018;
   font-size: 0.82rem;
   font-weight: 800;
+  transition: transform 0.2s ease;
 }
 
+.cart-count.pulse {
+  animation: cartPulse 0.4s ease;
+}
+
+@keyframes cartPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  padding: 0 9px;
+}
+
+.hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  background: var(--text);
+  transition: opacity 0.2s;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 18px;
+  border-radius: 18px;
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+
+.mobile-link:hover,
+.mobile-link.router-link-active {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+
+.cart-mobile {
+  background: rgba(99, 245, 210, 0.07);
+}
+
+/* Drawer transition */
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.drawer-enter-from,
+.drawer-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .nav-wrap {
-    padding-top: 12px;
-  }
-
-  .nav {
-    padding: 14px 16px;
-    border-radius: 18px;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .brand {
-    justify-content: center;
-  }
-
   .links {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    display: none;
   }
 
-  .nav-link,
-  .cart-link {
-    width: 100%;
-    padding: 0 10px;
-    font-size: 0.92rem;
-  }
-
-  .cart-count {
-    min-width: 24px;
-    height: 24px;
+  .hamburger {
+    display: flex;
   }
 }
 

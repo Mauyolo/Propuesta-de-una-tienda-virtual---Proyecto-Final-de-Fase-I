@@ -4,6 +4,7 @@ export const useCartStore = defineStore('cart', {
   state: () => ({
     cart: []
   }),
+  persist: true,
 
   actions: {
     addToCart(product) {
@@ -33,6 +34,10 @@ export const useCartStore = defineStore('cart', {
       } else {
         this.removeFromCart(id)
       }
+    },
+
+    clearCart() {
+      this.cart = []
     }
   },
 
