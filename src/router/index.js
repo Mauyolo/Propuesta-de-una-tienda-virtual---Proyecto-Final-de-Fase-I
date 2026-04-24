@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Products from '../views/Products.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import GameCoins from '../views/GameCoins.vue'
+import Monedas from '../views/Monedas.vue'
 import Combos from '../views/Combos.vue'
 import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
@@ -30,6 +31,11 @@ const routes = [
     path: '/game/:id/coins',
     name: 'GameCoins',
     component: GameCoins
+  },
+  {
+    path: '/monedas',
+    name: 'Monedas',
+    component: Monedas
   },
   {
     path: '/combos',
