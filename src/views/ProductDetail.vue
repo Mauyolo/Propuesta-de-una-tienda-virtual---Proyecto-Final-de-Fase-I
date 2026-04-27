@@ -1,15 +1,26 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCartStore } from '../store/cart'
-import { getGameById } from '../data/games'
+import { useProductsStore } from '../store/products'
 
 const route = useRoute()
 const cart = useCartStore()
-const product = computed(() => getGameById(route.params.id) || {})
+const productsStore = useProductsStore()
+
+// Busca por _id (MongoDB) o id numérico (fallback local)
+const product = computed(() => {
+  const id = route.params.id
+  return productsStore.games.find(g =>
+    g._id === id || String(g.id) === String(id)
+  ) || {}
+})
 
 const shortCategory = computed(() => product.value.category || 'Coleccion Nitro')
 const add = () => cart.addToCart(product.value)
+
+// Asegura que los juegos estén cargados
+onMounted(() => productsStore.loadGames())
 </script>
 
 <template>

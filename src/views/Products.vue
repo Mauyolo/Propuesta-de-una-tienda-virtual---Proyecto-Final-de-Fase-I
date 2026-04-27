@@ -1,11 +1,16 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
-import { games } from '../data/games'
+import { useProductsStore } from '../store/products'
 
 const router = useRouter()
-const products = ref(games)
+const productsStore = useProductsStore()
+
+// Datos dinámicos desde el store (que usa api.js con fallback local)
+const products = computed(() => productsStore.games)
+const loading = computed(() => productsStore.loading)
+
 const search = ref('')
 const category = ref('all')
 
@@ -18,13 +23,19 @@ const filtered = computed(() => {
   }
   if (search.value.trim()) {
     const q = search.value.toLowerCase()
-    result = result.filter((p) => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
+    result = result.filter((p) =>
+      p.title.toLowerCase().includes(q) ||
+      (p.description && p.description.toLowerCase().includes(q))
+    )
   }
   return result
 })
 
 const goToCoins = (id) => router.push(`/game/${id}/coins`)
 const clearSearch = () => { search.value = ''; category.value = 'all' }
+
+// Carga datos al montar la vista (usa caché si ya están cargados)
+onMounted(() => productsStore.loadGames())
 </script>
 
 <template>
@@ -83,8 +94,15 @@ const clearSearch = () => { search.value = ''; category.value = 'all' }
       </button>
     </div>
 
+    <!-- Loading state -->
+    <div v-if="loading" class="no-results glass-panel">
+      <span style="font-size: 2.8rem">⏳</span>
+      <h2>Cargando catálogo…</h2>
+      <p class="section-copy">Obteniendo juegos desde el servidor.</p>
+    </div>
+
     <!-- Empty state -->
-    <div v-if="filtered.length === 0" class="no-results glass-panel">
+    <div v-else-if="filtered.length === 0" class="no-results glass-panel">
       <span style="font-size: 2.8rem">🎮</span>
       <h2>Sin resultados</h2>
       <p class="section-copy">No encontramos juegos con esos filtros.</p>

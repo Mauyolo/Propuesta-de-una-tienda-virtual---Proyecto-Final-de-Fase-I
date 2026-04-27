@@ -1,23 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useCartStore } from '../store/cart'
-import { games } from '../data/games'
+import { useProductsStore } from '../store/products'
+// gameCoins tiene una estructura especial (packs anidados por juego) → se mantiene local
 import { gameCoinsCatalog } from '../data/gameCoins'
-import { combos } from '../data/combos'
 import ComboCard from '../components/ComboCard.vue'
 
 const cart = useCartStore()
+const productsStore = useProductsStore()
 
-// Destacados: primeros 4 juegos
-const featuredGames = games.slice(0, 4)
+// Destacados: primeros 4 juegos del store (cargados desde API/fallback)
+const featuredGames = computed(() => productsStore.games.slice(0, 4))
 
-// Monedas populares: Genshin, Valorant, LoL
+// Monedas populares: Genshin, Valorant, LoL (datos locales — estructura especial)
 const popularCoins = gameCoinsCatalog.filter(g =>
   ['gc-genshin', 'gc-valorant', 'gc-lol'].includes(g.id)
 )
 
-// Combos destacados: primeros 3
-const featuredCombos = combos.slice(0, 3)
+// Combos destacados: primeros 3 del store
+const featuredCombos = computed(() => productsStore.combos.slice(0, 3))
 
 const addCombo = (combo) => cart.addToCart({ ...combo })
 
@@ -48,6 +49,9 @@ const sections = [
     color: '#ff8c5a'
   }
 ]
+
+// Carga juegos y combos al montar la home (usa caché si ya están disponibles)
+onMounted(() => productsStore.loadAll())
 </script>
 
 <template>

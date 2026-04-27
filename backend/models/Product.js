@@ -23,12 +23,28 @@ const ProductSchema = new mongoose.Schema({
   image: {
     type: String
   },
+  // ── Coins ──────────────────────────────────────────────
   amount: {
-    type: Number // For coins
+    type: Number   // cantidad de monedas del pack
+  },
+  bonus: {
+    type: String   // e.g. "200 de bonus"
+  },
+  // ── Combos ─────────────────────────────────────────────
+  originalPrice: {
+    type: Number   // precio antes del descuento
+  },
+  discount: {
+    type: Number   // porcentaje de descuento (17, 20…)
+  },
+  badge: {
+    type: String   // e.g. "Oferta saga", "Bundle RPG"
   },
   items: [{
-    type: String // For combos (can just store descriptions or names of what's inside)
+    type: String   // nombres de los productos incluidos en el combo
   }]
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('Product', ProductSchema);

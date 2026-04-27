@@ -1,26 +1,33 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useCartStore } from '../store/cart'
-import { combos } from '../data/combos'
+import { useProductsStore } from '../store/products'
 import ComboCard from '../components/ComboCard.vue'
 
 const cart = useCartStore()
+const productsStore = useProductsStore()
+
 const filter = ref('all')
 
+const allCombos = computed(() => productsStore.combos)
+
 const filtered = computed(() => {
-  if (filter.value === 'all') return combos
+  const list = allCombos.value
+  if (filter.value === 'all') return list
   if (filter.value === 'game')
-    return combos.filter(
-      c => !c.items.some(i => i.includes('Coins') || i.includes('Monedas') || i.includes('NitroCoins'))
+    return list.filter(
+      c => !c.items?.some(i => i.includes('Coins') || i.includes('Monedas') || i.includes('NitroCoins'))
     )
-  return combos.filter(
-    c => c.items.some(i => i.includes('Coins') || i.includes('Monedas') || i.includes('NitroCoins'))
+  return list.filter(
+    c => c.items?.some(i => i.includes('Coins') || i.includes('Monedas') || i.includes('NitroCoins'))
   )
 })
 
 const addCombo = (combo) => {
-  cart.addToCart({ ...combo, id: combo.id })
+  cart.addToCart({ ...combo, id: combo._id || combo.id })
 }
+
+onMounted(() => productsStore.loadCombos())
 </script>
 
 <template>

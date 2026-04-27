@@ -9,5 +9,5 @@ services:
       - key: MONGODB_URI
         sync: false      # Configura este valor manualmente en el panel de Render
       - key: PORT
-        value: 3000
-    healthCheckPath: /api/products
+        value: 10000     # Render asigna el puerto 10000 por defecto
+    healthCheckPath: /api/health
