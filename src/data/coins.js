@@ -12,7 +12,7 @@ export const coins = [
     bonus: null,
     type: 'coin',
     description: 'Paquete de entrada. Ideal para probar el sistema de monedas.',
-    image: 'https://cdn-icons-png.flaticon.com/512/2910/2910791.png'
+    image: '/images/currencies/nitro-coin.png'
   },
   {
     id: 102,
@@ -22,7 +22,7 @@ export const coins = [
     bonus: '200 de bonus',
     type: 'coin',
     description: 'El más popular. Recibe 200 monedas extra sin costo adicional.',
-    image: 'https://cdn-icons-png.flaticon.com/512/2910/2910791.png'
+    image: '/images/currencies/nitro-coin.png'
   },
   {
     id: 103,
@@ -32,7 +32,7 @@ export const coins = [
     bonus: '300 de bonus',
     type: 'coin',
     description: 'Gran valor. Perfecto para jugadores frecuentes.',
-    image: 'https://cdn-icons-png.flaticon.com/512/2910/2910791.png'
+    image: '/images/currencies/nitro-coin.png'
   },
   {
     id: 104,
@@ -42,7 +42,7 @@ export const coins = [
     bonus: '500 de bonus',
     type: 'coin',
     description: 'Paquete premium con el mejor ratio de valor por moneda.',
-    image: 'https://cdn-icons-png.flaticon.com/512/2910/2910791.png'
+    image: '/images/currencies/nitro-coin.png'
   },
   {
     id: 105,
@@ -52,7 +52,7 @@ export const coins = [
     bonus: '1,500 de bonus',
     type: 'coin',
     description: 'Para jugadores serios. El mayor paquete disponible.',
-    image: 'https://cdn-icons-png.flaticon.com/512/2910/2910791.png'
+    image: '/images/currencies/nitro-coin.png'
   }
 ]
 

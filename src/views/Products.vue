@@ -54,7 +54,7 @@ onMounted(() => productsStore.loadGames())
       <div class="filters-panel">
         <!-- Search -->
         <div class="search-wrap">
-          <span class="search-icon">🔍</span>
+          <span class="search-icon" aria-hidden="true"></span>
           <input
             id="products-search"
             v-model="search"
@@ -96,14 +96,14 @@ onMounted(() => productsStore.loadGames())
 
     <!-- Loading state -->
     <div v-if="loading" class="no-results glass-panel">
-      <span style="font-size: 2.8rem">⏳</span>
+      <div class="loading-spinner"></div>
       <h2>Cargando catálogo…</h2>
       <p class="section-copy">Obteniendo juegos desde el servidor.</p>
     </div>
 
     <!-- Empty state -->
     <div v-else-if="filtered.length === 0" class="no-results glass-panel">
-      <span style="font-size: 2.8rem">🎮</span>
+      <div class="empty-icon" aria-hidden="true"></div>
       <h2>Sin resultados</h2>
       <p class="section-copy">No encontramos juegos con esos filtros.</p>
       <button class="btn btn-primary" @click="clearSearch">Ver todos</button>
@@ -111,10 +111,10 @@ onMounted(() => productsStore.loadGames())
 
     <!-- Grid -->
     <div v-else class="grid">
-      <div v-for="p in filtered" :key="p.id" class="card-wrapper">
+      <div v-for="p in filtered" :key="p._id || p.id" class="card-wrapper">
         <ProductCard :product="p" />
-        <button class="coins-shortcut" @click.stop="goToCoins(p.id)" title="Ver ofertas de monedas">
-          🪙 Monedas
+        <button class="coins-shortcut" @click.stop="goToCoins(p._id || p.id)" title="Ver monedas">
+          Monedas
         </button>
       </div>
     </div>
@@ -161,8 +161,35 @@ onMounted(() => productsStore.loadGames())
 .search-icon {
   position: absolute;
   left: 14px;
-  font-size: 1rem;
+  width: 18px;
+  height: 18px;
   pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667799' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.loading-spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid rgba(99, 245, 210, 0.15);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: rgba(99, 245, 210, 0.08);
+  border: 1px solid rgba(99, 245, 210, 0.18);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2363f5d2' stroke-width='1.5'%3E%3Crect x='2' y='7' width='20' height='14' rx='2'/%3E%3Cpath d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 32px;
+  background-position: center;
 }
 
 .search-input {

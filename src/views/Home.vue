@@ -22,12 +22,11 @@ const featuredCombos = computed(() => productsStore.combos.slice(0, 3))
 
 const addCombo = (combo) => cart.addToCart({ ...combo })
 
-// Categorías de la tienda
 const sections = [
   {
     key: 'games',
     label: 'Juegos',
-    emoji: '🎮',
+    icon: 'G',
     desc: 'Títulos AAA, indie y clásicos',
     to: '/products',
     color: '#63f5d2'
@@ -35,7 +34,7 @@ const sections = [
   {
     key: 'coins',
     label: 'Monedas',
-    emoji: '🪙',
+    icon: 'C',
     desc: 'Genesis Crystals, VP, RP y más',
     to: '/monedas',
     color: '#ffd04a'
@@ -43,7 +42,7 @@ const sections = [
   {
     key: 'combos',
     label: 'Combos',
-    emoji: '🔥',
+    icon: 'B',
     desc: 'Bundles con descuentos exclusivos',
     to: '/combos',
     color: '#ff8c5a'
@@ -60,7 +59,7 @@ onMounted(() => productsStore.loadAll())
     <!-- ══ HERO ══════════════════════════════════════════════ -->
     <section class="page-shell hero-section">
       <div class="hero-content">
-        <span class="eyebrow">🚀 Colección premium 2025</span>
+        <span class="eyebrow">Colección premium 2025</span>
         <h1 class="hero-title">
           La tienda gamer que
           <span class="accent-text">lo tiene todo</span>
@@ -70,8 +69,8 @@ onMounted(() => productsStore.loadAll())
           Entregas digitales instantáneas al mejor precio.
         </p>
         <div class="hero-actions">
-          <router-link to="/products" class="btn btn-primary">🎮 Explorar catálogo</router-link>
-          <router-link to="/monedas" class="btn btn-secondary">🪙 Ver monedas</router-link>
+          <router-link to="/products" class="btn btn-primary">Explorar catálogo</router-link>
+          <router-link to="/monedas" class="btn btn-secondary">Ver monedas</router-link>
         </div>
         <div class="hero-stats">
           <div class="stat glass-panel">
@@ -94,22 +93,22 @@ onMounted(() => productsStore.loadAll())
         <div class="spotlight s2"></div>
         <div class="visual-grid">
           <div class="vg-card vg-main">
-            <span class="vg-tag">🔥 Trending</span>
+            <span class="vg-tag">Trending</span>
             <strong>Clair Obscur</strong>
             <p>RPG del momento</p>
           </div>
           <div class="vg-card vg-sm vg-coins">
-            <span class="vg-emoji">💎</span>
+            <img src="https://static.wikia.nocookie.net/gensin-impact/images/1/1a/Item_Genesis_Crystal.png" class="vg-icon" alt="" />
             <span>Genesis Crystals</span>
             <small>Genshin Impact</small>
           </div>
           <div class="vg-card vg-sm vg-combo">
-            <span class="vg-emoji">🔺</span>
+            <img src="https://static.wikia.nocookie.net/valorant/images/f/f7/Valorant_Points.png" class="vg-icon" alt="" />
             <span>Valorant Points</span>
             <small>Valorant</small>
           </div>
           <div class="vg-card vg-sm vg-bundle">
-            <span class="vg-emoji">🔥</span>
+            <div class="vg-icon bundle-icon" aria-hidden="true"></div>
             <span>Pack Supervivencia</span>
             <small>-17% descuento</small>
           </div>
@@ -131,7 +130,7 @@ onMounted(() => productsStore.loadAll())
           class="cat-card glass-panel"
           :style="{ '--cat-color': s.color }"
         >
-          <div class="cat-emoji">{{ s.emoji }}</div>
+          <div class="cat-icon" :style="{ color: s.color }">{{ s.label[0] }}</div>
           <div class="cat-body">
             <strong class="cat-label">{{ s.label }}</strong>
             <span class="cat-desc">{{ s.desc }}</span>
@@ -145,7 +144,7 @@ onMounted(() => productsStore.loadAll())
     <section class="page-shell featured-section">
       <div class="section-header">
         <div>
-          <h2 class="section-heading">🎮 Juegos destacados</h2>
+          <h2 class="section-heading">Juegos destacados</h2>
           <p class="section-copy">Los títulos más populares de nuestra tienda</p>
         </div>
         <router-link to="/products" class="btn btn-secondary see-all">Ver todos →</router-link>
@@ -154,7 +153,7 @@ onMounted(() => productsStore.loadAll())
       <div class="games-scroll">
         <article
           v-for="game in featuredGames"
-          :key="game.id"
+          :key="game._id || game.id"
           class="game-mini-card glass-panel"
         >
           <div class="game-mini-cover">
@@ -165,7 +164,7 @@ onMounted(() => productsStore.loadAll())
             <h3>{{ game.title }}</h3>
             <div class="game-mini-footer">
               <span class="price-sm">${{ game.price }}</span>
-              <router-link :to="`/product/${game.id}`" class="btn btn-primary mini-btn">
+              <router-link :to="`/product/${game._id || game.id}`" class="btn btn-primary mini-btn">
                 Ver
               </router-link>
             </div>
@@ -178,7 +177,7 @@ onMounted(() => productsStore.loadAll())
     <section class="page-shell coins-section">
       <div class="section-header">
         <div>
-          <h2 class="section-heading">🪙 Monedas populares</h2>
+          <h2 class="section-heading">Monedas populares</h2>
           <p class="section-copy">Recarga tus juegos favoritos al instante</p>
         </div>
         <router-link to="/monedas" class="btn btn-secondary see-all">Ver todas →</router-link>
@@ -193,7 +192,9 @@ onMounted(() => productsStore.loadAll())
           :style="{ '--gc-color': gc.color }"
         >
           <div class="pop-coin-glow"></div>
-          <div class="pop-coin-icon">{{ gc.currencySymbol }}</div>
+          <div class="pop-coin-icon">
+            <img :src="gc.currencyIcon" :alt="gc.game" class="pop-coin-img" />
+          </div>
           <div class="pop-coin-body">
             <span class="pop-coin-game">{{ gc.game }}</span>
             <span class="pop-coin-currency">{{ gc.currency }}</span>
@@ -210,7 +211,7 @@ onMounted(() => productsStore.loadAll())
     <section class="page-shell combos-section">
       <div class="section-header">
         <div>
-          <h2 class="section-heading">🔥 Combos destacados</h2>
+          <h2 class="section-heading">Combos destacados</h2>
           <p class="section-copy">Bundles con los mejores descuentos</p>
         </div>
         <router-link to="/combos" class="btn btn-secondary see-all">Ver todos →</router-link>
@@ -219,7 +220,7 @@ onMounted(() => productsStore.loadAll())
       <div class="combos-grid">
         <ComboCard
           v-for="combo in featuredCombos"
-          :key="combo.id"
+          :key="combo._id || combo.id"
           :combo="combo"
           @add="addCombo"
         />
@@ -392,8 +393,16 @@ onMounted(() => productsStore.loadAll())
   align-items: flex-start;
 }
 
-.vg-emoji {
-  font-size: 1.5rem;
+.vg-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.bundle-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff8c5a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 17l4 4 4-4m-4-5v9'/%3E%3Cpath d='M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .vg-sm span {
@@ -466,9 +475,19 @@ onMounted(() => productsStore.loadAll())
   background: color-mix(in srgb, var(--cat-color) 8%, var(--panel));
 }
 
-.cat-emoji {
-  font-size: 2rem;
+.cat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: color-mix(in srgb, var(--cat-color) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
 
 .cat-body {
@@ -628,8 +647,22 @@ onMounted(() => productsStore.loadAll())
 }
 
 .pop-coin-icon {
-  font-size: 2.4rem;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pop-coin-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
 }
 
 .pop-coin-body {

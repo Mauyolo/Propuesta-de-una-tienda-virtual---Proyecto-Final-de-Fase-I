@@ -12,7 +12,7 @@ const orderId = route.query.orderId
       <div class="checkmark-wrap">
         <div class="checkmark">✓</div>
       </div>
-      <span class="eyebrow">🎉 Pedido confirmado</span>
+      <span class="eyebrow">Pedido confirmado</span>
       <h1 class="section-title">¡Pago exitoso!</h1>
       <p class="section-copy">
         Tu compra ha sido procesada correctamente. Recibirás los accesos a tus

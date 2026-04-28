@@ -36,7 +36,7 @@ onMounted(() => productsStore.loadCombos())
     <!-- Header -->
     <div class="combos-hero glass-panel">
       <div>
-        <span class="eyebrow">🔥 Ofertas especiales</span>
+        <span class="eyebrow">Ofertas especiales</span>
         <h1 class="section-title">Combos y Bundles</h1>
         <p class="section-copy">
           Ahorra comprando paquetes combinados de juegos, monedas y colecciones especiales. Descuentos de hasta el 20%.
@@ -59,7 +59,7 @@ onMounted(() => productsStore.loadCombos())
     <div class="results-bar">
       <span class="tag">{{ filtered.length }} combo{{ filtered.length !== 1 ? 's' : '' }}</span>
       <router-link to="/monedas" class="monedas-link">
-        🪙 Ver monedas por separado →
+        Ver monedas por separado →
       </router-link>
     </div>
 

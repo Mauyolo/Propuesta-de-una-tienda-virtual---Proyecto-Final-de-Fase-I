@@ -36,7 +36,7 @@ const closeMenu = () => { menuOpen.value = false }
         <router-link to="/" class="nav-link" exact-active-class="router-link-exact-active">Inicio</router-link>
         <router-link to="/products" class="nav-link">Juegos</router-link>
         <span class="nav-divider" aria-hidden="true"></span>
-        <router-link to="/monedas" class="nav-link coins-link">🪙 Monedas</router-link>
+        <router-link to="/monedas" class="nav-link coins-link">Monedas</router-link>
         <router-link to="/combos" class="nav-link">Combos</router-link>
         <router-link to="/cart" class="cart-link">
           Carrito
@@ -59,12 +59,12 @@ const closeMenu = () => { menuOpen.value = false }
     <Transition name="drawer">
       <div v-if="menuOpen" class="mobile-menu glass-panel page-shell">
         <router-link to="/" class="mobile-link" @click="closeMenu">Inicio</router-link>
-        <router-link to="/products" class="mobile-link" @click="closeMenu">🎮 Juegos</router-link>
+        <router-link to="/products" class="mobile-link" @click="closeMenu">Juegos</router-link>
         <div class="mobile-group-label">Tienda virtual</div>
-        <router-link to="/monedas" class="mobile-link" @click="closeMenu">🪙 Monedas</router-link>
-        <router-link to="/combos" class="mobile-link" @click="closeMenu">🔥 Combos</router-link>
+        <router-link to="/monedas" class="mobile-link" @click="closeMenu">Monedas</router-link>
+        <router-link to="/combos" class="mobile-link" @click="closeMenu">Combos</router-link>
         <router-link to="/cart" class="mobile-link cart-mobile" @click="closeMenu">
-          🛒 Carrito
+          Carrito
           <span class="cart-count">{{ cartCount }}</span>
         </router-link>
       </div>

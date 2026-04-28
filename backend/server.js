@@ -44,7 +44,7 @@ app.use(express.json());
 
 // ── DB connection ─────────────────────────────────────────────────────────────
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('✅ Conectado a MongoDB Atlas'))
+  .then(() => console.log('MongoDB conectado'))
   .catch(err => {
     console.error('❌ Error de conexión MongoDB:', err.message);
     console.warn('⚠️  El servidor continúa, pero las rutas de DB fallarán.');

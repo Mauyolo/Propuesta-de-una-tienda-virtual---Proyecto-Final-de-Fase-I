@@ -1,16 +1,31 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCartStore } from '../store/cart'
-import { getGameById } from '../data/games'
-import { coins } from '../data/coins'
+import { useProductsStore } from '../store/products'
 
 const route = useRoute()
 const cart = useCartStore()
-const game = computed(() => getGameById(route.params.id) || {})
+const productsStore = useProductsStore()
+
+// Busca el juego por _id (MongoDB) o id numérico (fallback local)
+const game = computed(() => {
+  const id = route.params.id
+  return productsStore.games.find(g =>
+    g._id === id || String(g.id) === String(id)
+  ) || {}
+})
+
+// NitroCoins desde el store (type='coin')
+const coins = computed(() => productsStore.coins)
 
 const addGame = () => cart.addToCart({ ...game.value, type: 'game' })
 const addCoin = (coin) => cart.addToCart({ ...coin })
+
+onMounted(() => {
+  productsStore.loadGames()
+  productsStore.loadCoins()
+})
 </script>
 
 <template>
@@ -31,7 +46,7 @@ const addCoin = (coin) => cart.addToCart({ ...coin })
             <div class="price-highlight">${{ game.price }}</div>
           </div>
           <button class="btn btn-primary" @click="addGame">
-            🎮 Comprar juego
+            Comprar juego
           </button>
         </div>
       </div>
@@ -40,7 +55,7 @@ const addCoin = (coin) => cart.addToCart({ ...coin })
     <!-- Coin offers section -->
     <div class="coins-section">
       <div class="coins-header">
-        <span class="eyebrow">💰 NitroCoins</span>
+        <span class="eyebrow">NitroCoins</span>
         <h2 class="coins-title">Monedas virtuales para <span class="accent-text">{{ game.title }}</span></h2>
         <p class="section-copy">Elige el paquete de monedas que mejor se adapte a tu estilo de juego.</p>
       </div>
@@ -48,12 +63,14 @@ const addCoin = (coin) => cart.addToCart({ ...coin })
       <div class="coins-grid">
         <article
           v-for="coin in coins"
-          :key="coin.id"
+          :key="coin._id || coin.id"
           class="coin-card glass-panel"
-          :class="{ popular: coin.id === 102 }"
+          :class="{ popular: coin.amount === 1200 }"
         >
-          <div v-if="coin.id === 102" class="popular-tag">⭐ Más popular</div>
-          <div class="coin-icon">🪙</div>
+          <div v-if="coin.amount === 1200" class="popular-tag">Más popular</div>
+          <div class="coin-icon">
+            <img :src="coin.image" :alt="coin.title" class="coin-img" />
+          </div>
           <h3 class="coin-title">{{ coin.title }}</h3>
           <p class="coin-desc">{{ coin.description }}</p>
           <div v-if="coin.bonus" class="coin-bonus">
@@ -192,8 +209,20 @@ const addCoin = (coin) => cart.addToCart({ ...coin })
 }
 
 .coin-icon {
-  font-size: 2.6rem;
-  line-height: 1;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coin-img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
 }
 
 .coin-title {

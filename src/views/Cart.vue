@@ -66,9 +66,7 @@ const goToCheckout = () => router.push('/checkout')
           <strong class="total-amount">${{ cart.total.toFixed(2) }}</strong>
         </div>
 
-        <button class="btn btn-primary summary-btn" @click="goToCheckout">
-          🔒 Finalizar compra
-        </button>
+        <button class="btn btn-primary summary-btn" @click="goToCheckout">Finalizar compra</button>
         <button class="btn btn-secondary clear-btn" @click="cart.clearCart">
           Vaciar carrito
         </button>
@@ -76,7 +74,7 @@ const goToCheckout = () => router.push('/checkout')
     </div>
 
     <div v-else class="empty-state glass-panel">
-      <span style="font-size: 3rem">🛒</span>
+      <div class="cart-empty-icon" aria-hidden="true"></div>
       <h2>Tu carrito está vacío</h2>
       <p class="section-copy">
         Agrega juegos, monedas o combos para ver aquí tu resumen de compra.
@@ -294,6 +292,18 @@ const goToCheckout = () => router.push('/checkout')
 }
 
 .empty-state h2 { margin: 0; }
+
+.cart-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: rgba(99, 245, 210, 0.08);
+  border: 1px solid rgba(99, 245, 210, 0.18);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2363f5d2' stroke-width='1.5'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 34px;
+  background-position: center;
+}
 
 .empty-actions {
   display: flex;

@@ -24,7 +24,7 @@ const emit = defineEmits(['add'])
 
       <ul class="combo-items">
         <li v-for="item in combo.items" :key="item">
-          <span class="check">✓</span>{{ item }}
+          <span class="check" aria-hidden="true"></span>{{ item }}
         </li>
       </ul>
 
@@ -33,9 +33,7 @@ const emit = defineEmits(['add'])
           <span class="original-price">${{ combo.originalPrice.toFixed(2) }}</span>
           <span class="price-highlight">${{ combo.price.toFixed(2) }}</span>
         </div>
-        <button class="btn btn-primary" @click="emit('add', combo)">
-          🛒 Agregar al carrito
-        </button>
+        <button class="btn btn-primary" @click="emit('add', combo)">Agregar al carrito</button>
       </div>
     </div>
   </article>
@@ -131,9 +129,25 @@ const emit = defineEmits(['add'])
 }
 
 .check {
-  color: var(--accent);
-  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(99, 245, 210, 0.15);
+  border: 1px solid rgba(99, 245, 210, 0.35);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check::before {
+  content: '';
+  width: 6px;
+  height: 4px;
+  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(-45deg) translateY(-1px);
+  display: block;
 }
 
 .combo-footer {

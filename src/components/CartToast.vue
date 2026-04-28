@@ -14,7 +14,7 @@ const toast = computed(() => cart.toast)
 <template>
   <Transition name="toast">
     <div v-if="toast" class="cart-toast" :class="toast.type" role="alert">
-      <span class="toast-icon">🛒</span>
+      <div class="toast-icon" aria-hidden="true"></div>
       <span class="toast-message">{{ toast.message }}</span>
     </div>
   </Transition>
@@ -41,8 +41,12 @@ const toast = computed(() => cart.toast)
 }
 
 .toast-icon {
-  font-size: 1.3rem;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2363f5d2' stroke-width='2'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .toast-message {

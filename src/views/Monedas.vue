@@ -54,7 +54,7 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
     <!-- Header -->
     <div class="monedas-hero glass-panel">
       <div class="hero-text">
-        <span class="eyebrow">🪙 Monedas virtuales</span>
+        <span class="eyebrow">Monedas virtuales</span>
         <h1 class="section-title">Recarga tus juegos favoritos</h1>
         <p class="section-copy">
           Genesis Crystals, Riot Points, V-Bucks y más. Elige el pack perfecto para cada juego.
@@ -63,7 +63,7 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
 
       <div class="hero-search-wrap">
         <div class="search-wrap">
-          <span class="search-icon">🔍</span>
+          <span class="search-icon" aria-hidden="true"></span>
           <input
             id="monedas-search"
             v-model="search"
@@ -110,7 +110,7 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
 
     <!-- Empty state -->
     <div v-if="filtered.length === 0" class="no-results glass-panel">
-      <span style="font-size: 3rem">🪙</span>
+      <div class="coins-empty-icon" aria-hidden="true"></div>
       <h2>Sin resultados</h2>
       <p class="section-copy">No encontramos monedas con esos filtros.</p>
       <button class="btn btn-primary" @click="search = ''; selectedCompany = 'all'">Ver todas</button>
@@ -143,7 +143,8 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
               </span>
               <h2 class="modal-game-title">{{ selectedGame.game }}</h2>
               <div class="modal-currency">
-                {{ selectedGame.currencySymbol }} {{ selectedGame.currency }}
+                <img :src="selectedGame.currencyIcon" class="modal-currency-icon" alt="" />
+                {{ selectedGame.currency }}
               </div>
             </div>
           </div>
@@ -157,7 +158,7 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
             >
               <div v-if="pack.popular" class="popular-ribbon">⭐ Más popular</div>
               <div class="pack-amount">
-                {{ selectedGame.currencySymbol }}
+                <img :src="selectedGame.currencyIcon" class="pack-amount-icon" alt="" />
                 <strong>{{ pack.amount.toLocaleString() }}</strong>
               </div>
               <div v-if="pack.bonus" class="pack-bonus">+{{ pack.bonus.toLocaleString() }} bonus</div>
@@ -216,8 +217,12 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
 .search-icon {
   position: absolute;
   left: 14px;
-  font-size: 1rem;
+  width: 18px;
+  height: 18px;
   pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667799' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .search-input {
@@ -330,6 +335,18 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
 
 .no-results h2 { margin: 0; }
 
+.coins-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: rgba(255, 208, 74, 0.08);
+  border: 1px solid rgba(255, 208, 74, 0.18);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffd04a' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Cpath d='M12 8v8M8 12h8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 34px;
+  background-position: center;
+}
+
 /* Grid */
 .coins-grid {
   display: grid;
@@ -424,8 +441,17 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
 }
 
 .modal-currency {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.modal-currency-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 /* Packs grid */
@@ -474,8 +500,17 @@ const companyFilters = [{ key: 'all', label: 'Todas' }, ...companies.map(c => ({
 }
 
 .pack-amount {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 1rem;
   color: var(--muted);
+}
+
+.pack-amount-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 .pack-amount strong {

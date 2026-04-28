@@ -22,7 +22,7 @@ const emit = defineEmits(['select'])
     <div class="body">
       <h3 class="game-name">{{ game.game }}</h3>
       <div class="currency-row">
-        <span class="currency-icon">{{ game.currencySymbol }}</span>
+        <img :src="game.currencyIcon" :alt="game.currency" class="currency-icon-img" />
         <span class="currency-name">{{ game.currency }}</span>
       </div>
       <div class="price-range">
@@ -117,8 +117,11 @@ const emit = defineEmits(['select'])
   gap: 8px;
 }
 
-.currency-icon {
-  font-size: 1.1rem;
+.currency-icon-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
 }
 
 .currency-name {
