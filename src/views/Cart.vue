@@ -67,7 +67,7 @@ const goToCheckout = () => router.push('/checkout')
         </div>
 
         <button class="btn btn-primary summary-btn" @click="goToCheckout">Finalizar compra</button>
-        <button class="btn btn-secondary clear-btn" @click="cart.clearCart">
+        <button class="btn btn-secondary clear-btn" @click="cart.clearCart()">
           Vaciar carrito
         </button>
       </aside>

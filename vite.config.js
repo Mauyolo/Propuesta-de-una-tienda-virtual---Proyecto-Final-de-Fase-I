@@ -27,11 +27,13 @@ export default defineConfig({
 
   server: {
     port: 5173,
+    strictPort: false,  // Si 5173 está ocupado, usa 5174, 5175, etc.
     proxy: {
-      // En dev, las llamadas a /api se redirigen al backend local
+      // En dev, las llamadas a /api se redirigen al backend local (server-to-server, sin CORS)
       '/api': {
         target: 'http://localhost:3000',
-        changeOrigin: true
+        changeOrigin: true,
+        secure: false
       }
     }
   }

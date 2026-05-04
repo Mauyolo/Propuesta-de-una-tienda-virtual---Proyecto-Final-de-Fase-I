@@ -12,11 +12,13 @@ import { games as localGames } from '../data/games'
 import { coins as localCoins } from '../data/coins'
 import { combos as localCombos } from '../data/combos'
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
+// En desarrollo Vite proxea /api → localhost:3000 (ver vite.config.js).
+// En producción usar VITE_API_URL=https://tu-backend.onrender.com/api
+const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 6000
+  timeout: 10000
 })
 
 // ── Helpers ────────────────────────────────────────────────────────────────────

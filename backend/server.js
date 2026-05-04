@@ -13,32 +13,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
-// Permite peticiones desde el frontend en desarrollo y producción
-const allowedOrigins = [
-  'http://localhost:5173',               // Vite dev server
-  'http://localhost:4173',               // Vite preview
-  'https://nitrogames.netlify.app',      // Producción Netlify (cambiar si el nombre difiere)
-  /\.netlify\.app$/,                     // Cualquier subdominio de Netlify
-  /\.onrender\.com$/                     // Render previews
-];
-
 app.use(cors({
-  origin: (origin, callback) => {
-    // Permitir peticiones sin origen (Postman, curl, etc.)
-    if (!origin) return callback(null, true);
-
-    const allowed = allowedOrigins.some(o =>
-      typeof o === 'string' ? o === origin : o.test(origin)
-    );
-
-    if (allowed) {
-      callback(null, true);
-    } else {
-      callback(new Error(`CORS: Origen no permitido → ${origin}`));
-    }
-  },
+  origin: true,
   credentials: true
 }));
+
+// Preflight requests support sin usar "*" que rompe Express moderno
+app.options(/.*/, cors());
 
 app.use(express.json());
 

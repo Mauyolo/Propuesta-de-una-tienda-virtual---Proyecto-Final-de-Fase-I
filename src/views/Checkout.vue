@@ -19,6 +19,7 @@ const form = ref({
 const errors = ref({})
 const loading = ref(false)
 const step = ref(1) // 1 = form, 2 = processing, 3 = done
+const errorMessage = ref('') // Error visual en pantalla
 
 // ─── Computed ─────────────────────────────────────────────────────────────────
 const itemCount = computed(() =>
@@ -53,6 +54,7 @@ const validate = () => {
 // ─── Submit ───────────────────────────────────────────────────────────────────
 const submit = async () => {
   if (!validate()) return
+  errorMessage.value = ''
   loading.value = true
   step.value = 2
   try {
@@ -67,10 +69,10 @@ const submit = async () => {
       setTimeout(() => router.push({ name: 'OrderConfirmed', query: { orderId: result.orderId } }), 1800)
     }
   } catch (error) {
-    console.error(error)
+    console.error('[Checkout]', error)
     step.value = 1
     loading.value = false
-    alert(error.message || 'Error al procesar el pago')
+    errorMessage.value = error.message || 'Error al procesar el pago. Verifica tu conexión e intenta de nuevo.'
   }
 }
 </script>
@@ -182,6 +184,12 @@ const submit = async () => {
             <div class="secure-notice">
               <span class="secure-icon" aria-hidden="true"></span>
               <span>Pago simulado — tus datos no se envían a ningún servidor real</span>
+            </div>
+
+            <!-- Error banner -->
+            <div v-if="errorMessage" class="error-banner" role="alert">
+              <span class="error-banner-icon" aria-hidden="true"></span>
+              <span>{{ errorMessage }}</span>
             </div>
 
             <button type="submit" class="btn btn-primary submit-btn">
@@ -503,5 +511,35 @@ legend {
   background-repeat: no-repeat;
   background-size: 34px;
   background-position: center;
+}
+
+/* Error banner */
+.error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(255, 80, 80, 0.08);
+  border: 1px solid rgba(255, 80, 80, 0.28);
+  color: #ff8080;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.error-banner-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff8080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 </style>

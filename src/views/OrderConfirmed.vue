@@ -1,9 +1,12 @@
 <script setup>
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
-const orderId = route.query.orderId
+
+const orderId = computed(() => route.query.orderId || null)
+const displayId = computed(() => orderId.value ?? '—')
 </script>
 
 <template>
@@ -20,7 +23,7 @@ const orderId = route.query.orderId
       </p>
       <div class="order-id glass-panel">
         <span>ID de orden</span>
-        <strong>#{{ orderId }}</strong>
+        <strong>#{{ displayId }}</strong>
       </div>
       <div class="confirmed-actions">
         <router-link to="/products" class="btn btn-primary">Seguir comprando</router-link>
